@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Fase 3</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    input[type="text"] {
+      background-color: #333;
+      color: #8B0000;
+      border: none;
+      padding: 10px;
+      margin-top: 20px;
+      border-radius: 5px;
+      width: 80%;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #8B0000;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    img {
+      margin-top: 20px;
+      max-width: 100%;
+      height: auto;
+      border: 2px solid #8B0000;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Fase 3</h1>
+  <p>Resolva o enigma e digite a resposta:</p>
+
+  <div>
+    <img src="imagem3.jpg" alt="Enigma da fase 3">
+  </div>
+
+  <input type="text" id="resposta" placeholder="Digite a resposta">
+  <br>
+  <button onclick="verificarResposta()">Enviar Resposta</button>
+
+  <script>
+    function verificarResposta() {
+      const resposta = document.getElementById('resposta').value.trim().toLowerCase();
+
+      if (resposta === 'júlio césar' || resposta === 'julio cesar') {
+        window.location.href = 'fase4.html';
+      } else {
+        alert("Resposta incorreta! Tente novamente.");
+      }
+    }
+  </script>
+
+</body>
+</html>

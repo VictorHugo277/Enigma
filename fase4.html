@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Fase 4</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    input[type="text"] {
+      background-color: #333;
+      color: #8B0000;
+      border: none;
+      padding: 10px;
+      margin-top: 20px;
+      border-radius: 5px;
+      width: 80%;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #8B0000;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    img {
+      margin-top: 20px;
+      max-width: 100%;
+      height: auto;
+      border: 2px solid #8B0000;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Fase 4</h1>
+  <p>Resolva o último enigma e digite a senha final:</p>
+
+  <div>
+    <img src="imagem4.jpg" alt="Enigma da fase 4">
+  </div>
+
+  <input type="text" id="resposta" placeholder="Digite a senha final">
+  <br>
+  <button onclick="verificarResposta()">Enviar Resposta</button>
+
+  <script>
+    function verificarResposta() {
+      const resposta = document.getElementById('resposta').value.trim().toLowerCase();
+
+      if (resposta === 'congratulations!!!') {
+        window.location.href = 'final.html';
+      } else {
+        alert("Senha incorreta! Tente novamente.");
+      }
+    }
+  </script>
+
+</body>
+</html>

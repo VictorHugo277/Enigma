@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Fase 1</title>
+  <style>
+    body { background: black; color: #800000; font-family: Arial; text-align: center; }
+    input { background: #333; color: #800000; border: none; padding: 10px; }
+    button { background: #800000; color: white; border: none; padding: 10px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Fase 1</h1>
+  <img src="imagem1.jpg" alt="Enigma 1" width="300">
+  <p>Digite a resposta:</p>
+  <input id="resposta">
+  <button onclick="verificar()">Enviar</button>
+
+  <script>
+    function verificar() {
+      if (document.getElementById('resposta').value.toLowerCase() === 'espelho') {
+        window.location.href = 'fase2.html';
+      } else {
+        alert('Tente novamente!');
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Fase 2</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    input[type="text"] {
+      background-color: #333;
+      color: #8B0000;
+      border: none;
+      padding: 10px;
+      margin-top: 20px;
+      border-radius: 5px;
+      width: 80%;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #8B0000;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    img {
+      margin-top: 20px;
+      max-width: 100%;
+      height: auto;
+      border: 2px solid #8B0000;
+      border-radius: 10px;
+    }
+    #linkCompleto, #respostaFinalDiv {
+      margin-top: 20px;
+      display: none;
+    }
+    a {
+      color: #ff4d4d;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Fase 2</h1>
+  <p>Complete as duas partes para acessar a dica no Canva:</p>
+  
+  <p style="color: #ccc;">
+    https://www.canva.com/design/ <strong>(parte 1)</strong> /edit?utm_content= <strong>(parte 2)</strong> &utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+  </p>
+
+  <input type="text" id="parte1" placeholder="Digite a parte 1 do link">
+  <br>
+  <input type="text" id="parte2" placeholder="Digite a parte 2 do link">
+  <br>
+  <button onclick="gerarLink()">Gerar Link</button>
+
+  <div>
+    <img src="imagem2.jpg" alt="Enigma da fase 2">
+  </div>
+
+  <div id="linkCompleto">
+    <p>Link completo:</p>
+    <a id="linkCanva" href="#" target="_blank"></a>
+  </div>
+
+  <div id="respostaFinalDiv">
+    <p>Digite a resposta que encontrou no Canva:</p>
+    <input type="text" id="respostaFinal" placeholder="Digite a resposta final">
+    <br>
+    <button onclick="verificarRespostaFinal()">Enviar Resposta</button>
+  </div>
+
+  <script>
+    function gerarLink() {
+      const parte1 = document.getElementById('parte1').value.trim();
+      const parte2 = document.getElementById('parte2').value.trim();
+
+      if (parte1 === 'DAGoR_KNTYM/fmZFKPILH9uxaa82dVcZqg' && parte2 === 'DAGoR_KNTYM') {
+        const base = 'https://www.canva.com/design/';
+        const final = '/edit?utm_content=' + parte2 + '&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton';
+        const link = base + parte1 + final;
+
+        const linkElemento = document.getElementById('linkCanva');
+        linkElemento.href = link;
+        linkElemento.textContent = link;
+
+        document.getElementById('linkCompleto').style.display = 'block';
+        document.getElementById('respostaFinalDiv').style.display = 'block';
+      } else {
+        alert("Alguma parte está incorreta! Tente novamente.");
+      }
+    }
+
+    function verificarRespostaFinal() {
+      const resposta = document.getElementById('respostaFinal').value.trim().toLowerCase();
+
+      if (resposta === 'anagrama') {
+        window.location.href = 'fase3.html';
+      } else {
+        alert("Resposta incorreta! Tente novamente.");
+      }
+    }
+  </script>
+
+</body>
+</html>
