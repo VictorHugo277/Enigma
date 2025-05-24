@@ -29,12 +29,14 @@
       border-radius: 5px;
       cursor: pointer;
     }
-    img {
+    .binario {
       margin-top: 20px;
-      max-width: 100%;
-      height: auto;
+      padding: 10px;
       border: 2px solid #8B0000;
       border-radius: 10px;
+      color: #ff4d4d;
+      white-space: pre-wrap;
+      word-break: break-word;
     }
     #linkCompleto, #respostaFinalDiv {
       margin-top: 20px;
@@ -61,8 +63,12 @@
   <br>
   <button onclick="gerarLink()">Gerar Link</button>
 
-  <div>
-    <img src="imagem2.jpg" alt="Enigma da fase 2">
+  <div class="binario">
+    01000100 01000001 01000111 01101111 01010010 01011111 01001011 01001110 01010100 01011001 01001101 00101111 01100110 01101101 01011010 01000110 01001011 01010000 01001001 01001100 01001000 00111001 01110101 01111000 01100001 01100001 00111000 00110010 01100100 01010110 01100011 01011010 01110001 01100111
+  </div>
+
+  <div class="binario">
+    01000100 01000001 01000111 01101111 01010010 01011111 01001011 01001110 01010100 01011001 01001101
   </div>
 
   <div id="linkCompleto">
@@ -101,7 +107,7 @@
     function verificarRespostaFinal() {
       const resposta = document.getElementById('respostaFinal').value.trim().toLowerCase();
 
-      if (resposta === 'anagrama') {
+      if (resposta === 'amor') {
         window.location.href = 'fase3.html';
       } else {
         alert("Resposta incorreta! Tente novamente.");
