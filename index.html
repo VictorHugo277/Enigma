@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Bem-vinda!</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background-color: #222;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #8B0000;
+    }
+    p {
+      margin-top: 20px;
+      line-height: 1.6;
+    }
+    button {
+      margin-top: 30px;
+      padding: 15px 30px;
+      background-color: #8B0000;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #a30000;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Bem-vinda ao seu presente!</h1>
+    <p>
+      Esse é seu presente de mêsversário, dessa vez eu me passei (foi mal).  
+      Eu pensei em algo que gostaria de ganhar e pensei "por que não fazer ao invés disso?".
+    </p>
+    <p>
+      Você já odiou algum presente na vida? Parabéns!!! Se não, esse vai ser o primeiro.  
+      Esse vai ser um joguinho que vai te fazer pensar, e vai servir para testar sua inteligência (amo mulher inteligente, então se esforça aí).
+    </p>
+    <p>
+      <strong>Obs:</strong> As dicas para as fases são sempre a resposta das anteriores (tirando da fase 2 porque é bem facinha).  
+      <strong>Obs2:</strong> Você tem direito a 2 dicas minhas, porém cada uma delas terá não mais de duas palavras, então escolha bem, já que cada fase é mais difícil que a outra.
+    </p>
+    <p>
+      Termine e adquira seu prêmio :).
+    </p>
+
+    <button onclick="irParaFase1()">Começar Jogo</button>
+  </div>
+
+  <script>
+    function irParaFase1() {
+      window.location.href = 'fase1.html';
+    }
+  </script>
+
+</body>
+</html>
