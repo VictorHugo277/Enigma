@@ -80,7 +80,10 @@
       const parte1 = document.getElementById('parte1').value.trim();
       const parte2 = document.getElementById('parte2').value.trim();
 
-      if (parte1 === 'DAGoR_KNTYM/fmZFKPILH9uxaa82dVcZqg' && parte2 === 'DAGoR_KNTYM') {
+      const parte1Correta = "DAGoR_KNTYM/fmZFKPILH9uxaa82dVcZqg";
+      const parte2Correta = "DAGoR_KNTYM";
+
+      if (parte1.toLowerCase() === parte1Correta.toLowerCase() && parte2.toLowerCase() === parte2Correta.toLowerCase()) {
         const base = 'https://www.canva.com/design/';
         const final = '/edit?utm_content=' + parte2 + '&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton';
         const link = base + parte1 + final;
@@ -91,7 +94,7 @@
 
         document.getElementById('linkCompleto').style.display = 'block';
         document.getElementById('respostaFinalDiv').style.display = 'block';
-        document.getElementById('binarios').style.display = 'none';  // esconde binários após gerar link
+        document.getElementById('binarios').style.display = 'none';
       } else {
         alert("Alguma parte está incorreta! Tente novamente.");
       }
@@ -99,8 +102,9 @@
 
     function verificarRespostaFinal() {
       const resposta = document.getElementById('respostaFinal').value.trim().toLowerCase();
+      const respostaCorreta = "anagrama";
 
-      if (resposta === 'anagrama') {
+      if (resposta === respostaCorreta) {
         window.location.href = 'fase3.html';
       } else {
         alert("Resposta incorreta! Tente novamente.");
