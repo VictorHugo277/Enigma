@@ -29,22 +29,17 @@
       border-radius: 5px;
       cursor: pointer;
     }
-    .binario {
+    #linkCompleto, #respostaFinalDiv, #binarios {
       margin-top: 20px;
-      padding: 10px;
-      border: 2px solid #8B0000;
-      border-radius: 10px;
-      color: #ff4d4d;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-    #linkCompleto, #respostaFinalDiv {
-      margin-top: 20px;
-      display: none;
     }
     a {
       color: #ff4d4d;
       text-decoration: underline;
+    }
+    .binario {
+      margin: 5px 0;
+      font-family: monospace;
+      color: #ccc;
     }
   </style>
 </head>
@@ -63,20 +58,17 @@
   <br>
   <button onclick="gerarLink()">Gerar Link</button>
 
-  <div class="binario">
-    01000100 01000001 01000111 01101111 01010010 01011111 01001011 01001110 01010100 01011001 01001101 00101111 01100110 01101101 01011010 01000110 01001011 01010000 01001001 01001100 01001000 00111001 01110101 01111000 01100001 01100001 00111000 00110010 01100100 01010110 01100011 01011010 01110001 01100111
+  <div id="binarios">
+    <p class="binario">01000100 01000001 01000111 01101111 01010010 01011111 01001011 01001110 01010100 01011001 01001101 00101111 01100110 01101101 01011010 01000110 01001011 01010000 01001001 01001100 01001000 00111001 01110101 01111000 01100001 01100001 00111000 00110010 01100100 01010110 01100011 01011010 01110001 01100111</p>
+    <p class="binario">01000100 01000001 01000111 01101111 01010010 01011111 01001011 01001110 01010100 01011001 01001101</p>
   </div>
 
-  <div class="binario">
-    01000100 01000001 01000111 01101111 01010010 01011111 01001011 01001110 01010100 01011001 01001101
-  </div>
-
-  <div id="linkCompleto">
+  <div id="linkCompleto" style="display:none;">
     <p>Link completo:</p>
     <a id="linkCanva" href="#" target="_blank"></a>
   </div>
 
-  <div id="respostaFinalDiv">
+  <div id="respostaFinalDiv" style="display:none;">
     <p>Digite a resposta que encontrou no Canva:</p>
     <input type="text" id="respostaFinal" placeholder="Digite a resposta final">
     <br>
@@ -99,6 +91,7 @@
 
         document.getElementById('linkCompleto').style.display = 'block';
         document.getElementById('respostaFinalDiv').style.display = 'block';
+        document.getElementById('binarios').style.display = 'none';  // esconde binários após gerar link
       } else {
         alert("Alguma parte está incorreta! Tente novamente.");
       }
@@ -108,7 +101,7 @@
       const resposta = document.getElementById('respostaFinal').value.trim().toLowerCase();
 
       if (resposta === 'anagrama') {
-  window.location.href = 'fase3.html';
+        window.location.href = 'fase3.html';
       } else {
         alert("Resposta incorreta! Tente novamente.");
       }
