@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Labirinto 20x20 - Fase 9</title>
+  <style>
+    body { background: black; color: white; font-family: Arial; text-align: center; }
+    #labirinto {
+      display: grid;
+      grid-template-columns: repeat(20, 20px);
+      grid-template-rows: repeat(20, 20px);
+      gap: 1px;
+      margin: 20px auto;
+    }
+    .cell { width: 20px; height: 20px; background: #333; }
+    .player { background: blue; }
+    .obstacle { background: black; }
+    .pursuer { background: purple; }
+    .key { background: yellow; }
+    .exit { background: green; }
+    .checkpoint { background: orange; }
+    .death { background: red; }
+    #vidas { margin-top: 10px; }
+    .btn { padding: 10px; margin: 5px; background: #555; color: white; border: none; }
+  </style>
+</head>
+<body>
+
+<h1>Labirinto 20x20 - Fase 9</h1>
+<div id="vidas"></div>
+<div id="labirinto"></div>
+<div>
+  <button class="btn" onclick="move('up')">↑</button><br>
+  <button class="btn" onclick="move('left')">←</button>
+  <button class="btn" onclick="move('down')">↓</button>
+  <button class="btn" onclick="move('right')">→</button>
+</div>
+
+<script>
+  const size = 20;
+  const labirinto = document.getElementById('labirinto');
+  const vidasDiv = document.getElementById('vidas');
+  let vidas = 3;
+
+  const player = { x: 0, y: 0 };
+  const pursuer = { x: size - 1, y: size - 1 };
+  const checkpoint = { x: 0, y: 0 };
+  const key = { x: 0, y: size - 1 };
+  const exit = { x: size - 1, y: 0 };
+
+  let keyCollected = false;
+
+  const obstacles = [];
+  const deathPoints = [];
+
+  const safeZones = [
+    player, pursuer, checkpoint, key, exit,
+    { x: player.x + 1, y: player.y }, { x: player.x, y: player.y + 1 },
+    { x: exit.x - 1, y: exit.y }, { x: exit.x, y: exit.y + 1 },
+    { x: key.x, y: key.y - 1 }, { x: key.x + 1, y: key.y }
+  ];
+
+  function isSamePos(a, b) { return a.x === b.x && a.y === b.y; }
+
+  function isOccupied(pos) {
+    return obstacles.some(o => isSamePos(o, pos)) ||
+           safeZones.some(s => isSamePos(s, pos)) ||
+           deathPoints.some(dp => isSamePos(dp, pos));
+  }
+
+  // Criar obstáculos evitando saída e caminho livre
+  while (obstacles.length < 100) {
+    const pos = { x: Math.floor(Math.random() * size), y: Math.floor(Math.random() * size) };
+    if (!isOccupied(pos) && !(pos.x === exit.x && pos.y === exit.y)) {
+      obstacles.push(pos);
+    }
+  }
+
+  // Criar poucos pontos de morte no meio do labirinto
+  while (deathPoints.length < 5) {
+    const pos = {
+      x: Math.floor(size / 2) - 3 + Math.floor(Math.random() * 6),
+      y: Math.floor(size / 2) - 3 + Math.floor(Math.random() * 6)
+    };
+    if (!isOccupied(pos)) deathPoints.push(pos);
+  }
+
+  function updateVidas() {
+    vidasDiv.textContent = `Vidas: ${vidas}`;
+  }
+
+  function draw() {
+    labirinto.innerHTML = '';
+    for (let y = 0; y < size; y++) {
+      for (let x = 0; x < size; x++) {
+        const cell = document.createElement('div');
+        cell.classList.add('cell');
+
+        if (player.x === x && player.y === y) cell.classList.add('player');
+        else if (pursuer.x === x && pursuer.y === y) cell.classList.add('pursuer');
+        else if (key.x === x && key.y === y && !keyCollected) cell.classList.add('key');
+        else if (exit.x === x && exit.y === y) cell.classList.add('exit');
+        else if (isSamePos({x, y}, checkpoint)) cell.classList.add('checkpoint');
+        else if (obstacles.some(o => o.x === x && o.y === y)) cell.classList.add('obstacle');
+        else if (deathPoints.some(dp => dp.x === x && dp.y === y)) cell.classList.add('death');
+
+        labirinto.appendChild(cell);
+      }
+    }
+  }
+
+  function perderVida(msg) {
+    vidas--;
+    if (vidas <= 0) {
+      alert("Game Over! Reiniciando...");
+      vidas = 3;
+      keyCollected = false;
+    } else {
+      alert(msg + " Você perdeu uma vida!");
+    }
+    player.x = checkpoint.x;
+    player.y = checkpoint.y;
+  }
+
+  function move(dir) {
+    let nx = player.x;
+    let ny = player.y;
+
+    if (dir === 'up') ny--;
+    if (dir === 'down') ny++;
+    if (dir === 'left') nx--;
+    if (dir === 'right') nx++;
+
+    if (nx < 0 || ny < 0 || nx >= size || ny >= size) return;
+    if (obstacles.some(o => o.x === nx && o.y === ny)) return;
+
+    player.x = nx;
+    player.y = ny;
+
+    if (isSamePos(player, key)) {
+      keyCollected = true;
+      alert("Chave coletada! Agora vá até a saída.");
+    }
+
+    if (isSamePos(player, exit)) {
+      if (keyCollected) {
+        alert("Parabéns! Você venceu o labirinto!");
+        window.location.href = 'fase10.html';  // Redirecionamento para próxima fase
+        return;
+      } else {
+        alert("Você precisa da chave para sair!");
+      }
+    }
+
+    if (isSamePos(player, pursuer)) {
+      perderVida("Você foi pego pelo perseguidor!");
+    }
+
+    if (deathPoints.some(dp => isSamePos(dp, player))) {
+      perderVida("Você caiu em um ponto mortal!");
+    }
+
+    moverPerseguidor();
+    updateVidas();
+    draw();
+  }
+
+  function moverPerseguidor() {
+    if (pursuer.x < player.x) pursuer.x++;
+    else if (pursuer.x > player.x) pursuer.x--;
+
+    if (pursuer.y < player.y) pursuer.y++;
+    else if (pursuer.y > player.y) pursuer.y--;
+  }
+
+  updateVidas();
+  draw();
+</script>
+
+</body>
+</html>

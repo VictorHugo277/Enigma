@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Fase 8 - Quebra-Cabeça</title>
+  <style>
+    body { background: black; color: white; font-family: Arial; text-align: center; }
+    #puzzle { display: grid; grid-template-columns: repeat(4, 100px); gap: 2px; margin: 20px auto; }
+    .piece { width: 100px; height: 100px; background-size: 400px 400px; border: 1px solid #333; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<h1>Fase 8 - Monte o Quebra-Cabeça</h1>
+<div id="puzzle"></div>
+
+<script>
+  const puzzle = document.getElementById('puzzle');
+  const total = 16; // 4x4
+  const positions = Array.from({length: total}, (_, i) => i);
+
+  let selected = null;
+
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+  shuffle(positions);
+
+  function createPuzzle() {
+    puzzle.innerHTML = '';
+    positions.forEach((pos, index) => {
+      const div = document.createElement('div');
+      div.classList.add('piece');
+      div.style.backgroundImage = "url('sua-imagem.jpg')"; // Coloque o caminho da imagem
+      const x = (pos % 4) * -100;
+      const y = Math.floor(pos / 4) * -100;
+      div.style.backgroundPosition = `${x}px ${y}px`;
+      div.dataset.index = index;
+
+      div.addEventListener('click', () => selectPiece(index));
+      puzzle.appendChild(div);
+    });
+  }
+
+  function selectPiece(index) {
+    if (selected === null) {
+      selected = index;
+    } else {
+      [positions[selected], positions[index]] = [positions[index], positions[selected]];
+      selected = null;
+      createPuzzle();
+      checkWin();
+    }
+  }
+
+  function checkWin() {
+    const isCorrect = positions.every((pos, idx) => pos === idx);
+    if (isCorrect) {
+      alert("Parabéns! Você montou o quebra-cabeça!");
+      window.location.href = "fase9.html"; // Próxima fase
+    }
+  }
+
+  createPuzzle();
+</script>
+
+</body>
+</html>
