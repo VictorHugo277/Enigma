@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Fase 8 - Quebra-Cabeça</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    #puzzle {
+      display: grid;
+      grid-template-columns: repeat(4, 100px);
+      grid-template-rows: repeat(4, 100px);
+      gap: 2px;
+      margin: 20px auto;
+      width: fit-content;
+    }
+    .piece {
+      width: 100px;
+      height: 100px;
+      background-size: cover;
+      cursor: pointer;
+      border: 1px solid white;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Fase 8 - Monte o Quebra-Cabeça</h1>
+<div id="puzzle"></div>
+
+<script>
+  const pieces = [
+    "piece_1.png", "piece_2.png", "piece_3.png", "piece_4.png",
+    "piece_5.png", "piece_6.png", "piece_7.png", "piece_8.png",
+    "piece_9.png", "piece_10.png", "piece_11.png", "piece_12.png",
+    "piece_13.png", "piece_14.png", "piece_15.png", "piece_16.png"
+  ];
+
+  const puzzle = document.getElementById('puzzle');
+
+  function shuffle(array) {
+    for(let i = array.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+  shuffle(pieces);
+
+  pieces.forEach(src => {
+    const div = document.createElement('div');
+    div.className = 'piece';
+    div.style.backgroundImage = `url(${src})`;
+    div.addEventListener('click', () => {
+      const selected = document.querySelector('.selected');
+      if (selected) {
+        let temp = selected.style.backgroundImage;
+        selected.style.backgroundImage = div.style.backgroundImage;
+        div.style.backgroundImage = temp;
+        selected.classList.remove('selected');
+      } else {
+        div.classList.add('selected');
+      }
+    });
+    puzzle.appendChild(div);
+  });
+</script>
+
+</body>
+</html>

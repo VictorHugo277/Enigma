@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fase 5 - Caça Palavras</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+    }
+    td {
+      border: 1px solid white;
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      font-weight: bold;
+      cursor: pointer;
+      user-select: none;
+      color: #8B0000;
+      background-color: #333;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    td.selected {
+      background-color: #8B0000;
+      color: white;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #8B0000;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .found {
+      text-decoration: line-through;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Fase 5 - Caça-Palavras</h1>
+  <p>Encontre todas as palavras: <strong>AMOR</strong>, <strong>DESTINO</strong>, <strong>PÉTALA</strong>, <strong>MARGARIDA</strong></p>
+
+  <div id="palavras">
+    <p id="amor">AMOR</p>
+    <p id="destino">DESTINO</p>
+    <p id="petala">PÉTALA</p>
+    <p id="margarida">MARGARIDA</p>
+  </div>
+
+  <table id="grid"></table>
+
+  <button onclick="verificarFim()">Verificar</button>
+
+  <script>
+    // Palavras sem acento para verificação
+    const palavras = ["AMOR", "DESTINO", "PETALA", "MARGARIDA"];
+    const linhas = 12;
+    const colunas = 12;
+    let selecionadas = [];
+
+    const grid = document.getElementById('grid');
+
+    function gerarGrid() {
+      const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
+      for(let i = 0; i < linhas; i++) {
+        const tr = document.createElement('tr');
+        for(let j = 0; j < colunas; j++) {
+          const td = document.createElement('td');
+          td.textContent = letras[Math.floor(Math.random() * letras.length)];
+          td.addEventListener('click', () => selecionarLetra(td));
+          tr.appendChild(td);
+        }
+        grid.appendChild(tr);
+      }
+      inserirPalavras();
+    }
+
+    function inserirPalavras() {
+      const positions = [
+        { palavra: "AMOR", row: 0, col: 0, dir: "H" },
+        { palavra: "DESTINO", row: 2, col: 2, dir: "H" },
+        { palavra: "PETALA", row: 4, col: 4, dir: "H" },  // sem acento no grid
+        { palavra: "MARGARIDA", row: 6, col: 0, dir: "H" }
+      ];
+
+      positions.forEach(pos => {
+        for(let k = 0; k < pos.palavra.length; k++) {
+          const cell = grid.rows[pos.row].cells[pos.col + k];
+          cell.textContent = pos.palavra[k];
+          cell.dataset.palavra = pos.palavra;
+          cell.dataset.index = k;
+        }
+      });
+    }
+
+    function selecionarLetra(td) {
+      if (td.classList.contains('selected')) {
+        td.classList.remove('selected');
+        selecionadas = selecionadas.filter(cell => cell !== td);
+      } else {
+        td.classList.add('selected');
+        selecionadas.push(td);
+      }
+    }
+
+    // Função para verificar se as palavras foram encontradas na seleção
+    function verificarFim() {
+      let textoSelecionado = selecionadas.map(td => td.textContent).join('');
+      textoSelecionado = textoSelecionado.toUpperCase();
+
+      let encontradas = 0;
+      palavras.forEach(palavra => {
+        if(textoSelecionado.includes(palavra)) {
+          document.getElementById(palavra.toLowerCase()).classList.add('found');
+          encontradas++;
+        }
+      });
+
+      if(encontradas === palavras.length) {
+        alert("Parabéns! Você encontrou todas as palavras!");
+        window.location.href = 'fase6.html';
+      } else {
+        alert("Ainda faltam palavras! Continue procurando.");
+      }
+    }
+
+    gerarGrid();
+  </script>
+
+</body>
+</html>

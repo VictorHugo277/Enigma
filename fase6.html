@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Fase 6 - Progressão Aritmética</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    input[type="text"] {
+      background-color: #333;
+      color: #8B0000;
+      border: none;
+      padding: 10px;
+      margin-top: 20px;
+      border-radius: 5px;
+      width: 80%;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #8B0000;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Fase 6 - Progressão Aritmética</h1>
+  <p>Descubra o próximo número da sequência:</p>
+
+  <h2>3, 7, 11, 15, ___ ?</h2>
+
+  <input type="text" id="resposta" placeholder="Digite sua resposta">
+  <br>
+  <button onclick="verificarResposta()">Enviar Resposta</button>
+
+  <script>
+    function verificarResposta() {
+      const resposta = document.getElementById('resposta').value.trim();
+      const correta = 19;
+
+      if (parseInt(resposta) === correta) {
+        alert("Parabéns! Você acertou.");
+        window.location.href = 'fase7.html';
+      } else {
+        alert("Resposta incorreta! Tente novamente.");
+      }
+    }
+  </script>
+
+</body>
+</html>
