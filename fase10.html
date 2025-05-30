@@ -2,70 +2,38 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Fase 8 - Quebra-Cabeça</title>
+  <title>Fase 10 - Desafio Morse</title>
   <style>
-    body { background: black; color: white; font-family: Arial; text-align: center; }
-    #puzzle { display: grid; grid-template-columns: repeat(4, 100px); gap: 2px; margin: 20px auto; }
-    .piece { width: 100px; height: 100px; background-size: 400px 400px; border: 1px solid #333; cursor: pointer; }
+    body { background: black; color: #800000; font-family: Arial; text-align: center; padding: 50px; }
+    .morse { font-size: 20px; margin: 20px; }
+    input { padding: 10px; font-size: 16px; width: 300px; }
+    button { padding: 10px 20px; font-size: 16px; background: #555; color: white; border: none; margin-top: 10px; }
   </style>
 </head>
 <body>
 
-<h1>Fase 8 - Monte o Quebra-Cabeça</h1>
-<div id="puzzle"></div>
+<h1>Fase 10 - Decifre o Código</h1>
+<div class="morse">
+  --.- ..- .- .-.. / .- -. .. -- .- .-.. / - . -- / --.- ..- .- - .-. --- / .--. .- - .- ... / -.. . / -- .- -. .... .- / -.. ..- .- ... / -.. . / - .- .-. -.. . / . / - .-. . ... / .- / -. --- .. - . ..--..
+</div>
+
+<input type="text" id="resposta" placeholder="Digite sua resposta">
+<br>
+<button onclick="verificarResposta()">Enviar</button>
 
 <script>
-  const puzzle = document.getElementById('puzzle');
-  const total = 16; // 4x4
-  const positions = Array.from({length: total}, (_, i) => i);
+  const respostaCorreta = "o homem";
 
-  let selected = null;
-
-  function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-  }
-
-  shuffle(positions);
-
-  function createPuzzle() {
-    puzzle.innerHTML = '';
-    positions.forEach((pos, index) => {
-      const div = document.createElement('div');
-      div.classList.add('piece');
-      div.style.backgroundImage = "url('sua-imagem.jpg')"; // Coloque o caminho da imagem
-      const x = (pos % 4) * -100;
-      const y = Math.floor(pos / 4) * -100;
-      div.style.backgroundPosition = `${x}px ${y}px`;
-      div.dataset.index = index;
-
-      div.addEventListener('click', () => selectPiece(index));
-      puzzle.appendChild(div);
-    });
-  }
-
-  function selectPiece(index) {
-    if (selected === null) {
-      selected = index;
+  function verificarResposta() {
+    const resp = document.getElementById('resposta').value.trim().toLowerCase();
+    if (resp.replace(/\s+/g, '') === respostaCorreta.replace(/\s+/g, '')) {
+      alert("Parabéns! Você decifrou o código.");
+      window.location.href = 'fase11.html';
     } else {
-      [positions[selected], positions[index]] = [positions[index], positions[selected]];
-      selected = null;
-      createPuzzle();
-      checkWin();
+      alert("Resposta incorreta! Tente novamente.");
+      document.getElementById('resposta').value = '';
     }
   }
-
-  function checkWin() {
-    const isCorrect = positions.every((pos, idx) => pos === idx);
-    if (isCorrect) {
-      alert("Parabéns! Você montou o quebra-cabeça!");
-      window.location.href = "fase9.html"; // Próxima fase
-    }
-  }
-
-  createPuzzle();
 </script>
 
 </body>
