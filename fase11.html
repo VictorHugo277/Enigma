@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Fase 11 - Enigma Literário</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      color: #8B0000; /* Vermelho padrão */
+    }
+    p {
+      font-size: 18px;
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 20px;
+      width: 200px;
+      border-radius: 5px;
+      border: 2px solid #8B0000;
+      background-color: #222;
+      color: white;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 10px;
+      background-color: #8B0000;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .correct {
+      color: lightgreen;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    .incorrect {
+      color: #8B0000;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Fase 11</h1>
+  <p style="color: #8B0000;">Em um dos nossos livros favoritos...</p>
+
+  <input type="text" id="resposta" placeholder="Digite a resposta">
+  <br>
+  <button onclick="verificarResposta()">Verificar</button>
+
+  <p id="feedback"></p>
+
+  <script>
+    function verificarResposta() {
+      const resposta = document.getElementById('resposta').value.trim().toLowerCase();
+      const feedback = document.getElementById('feedback');
+
+      if (resposta === 'metamorfose') {
+        feedback.textContent = 'Correto! Você pode prosseguir!';
+        feedback.className = 'correct';
+        setTimeout(() => {
+          window.location.href = 'fase12.html';
+        }, 1500);
+      } else {
+        feedback.textContent = 'Resposta incorreta. Tente novamente!';
+        feedback.className = 'incorrect';
+      }
+    }
+  </script>
+
+</body>
+</html>
