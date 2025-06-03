@@ -83,6 +83,15 @@
     <label><input type="radio" name="q4" value="E"> E) 06/09/24</label>
   </div>
 
+  <div class="pergunta">
+    <p>5) Meus cantores internacionais favoritos:</p>
+    <label><input type="radio" name="q5" value="A"> A) Daniel Caesar, Giveon, Daniel Kim</label>
+    <label><input type="radio" name="q5" value="B"> B) Joji, Daniel Caesar e Laufey</label>
+    <label><input type="radio" name="q5" value="C"> C) Daniel Caesar, Joji e Giveon</label>
+    <label><input type="radio" name="q5" value="D"> D) Giveon, Laufey e Brent Faiyaz</label>
+    <label><input type="radio" name="q5" value="E"> E) Daniel Caesar, Daniel Kim e Brent Faiyaz</label>
+  </div>
+
   <button onclick="verificarQuiz()">Verificar</button>
 
   <p id="feedback" class="feedback"></p>
@@ -93,15 +102,16 @@
       const q2 = document.querySelector('input[name="q2"]:checked');
       const q3 = document.querySelector('input[name="q3"]:checked');
       const q4 = document.querySelector('input[name="q4"]:checked');
+      const q5 = document.querySelector('input[name="q5"]:checked');
       const feedback = document.getElementById('feedback');
 
-      if (!q1 || !q2 || !q3 || !q4) {
+      if (!q1 || !q2 || !q3 || !q4 || !q5) {
         feedback.textContent = 'Por favor, responda todas as perguntas!';
         feedback.className = 'feedback incorrect';
         return;
       }
 
-      if (q1.value === 'C' && q2.value === 'B' && q3.value === 'D' && q4.value === 'B') {
+      if (q1.value === 'C' && q2.value === 'B' && q3.value === 'D' && q4.value === 'B' && q5.value === 'B') {
         feedback.textContent = 'Parabéns! Você completou o quiz e venceu o jogo!';
         feedback.className = 'feedback correct';
         setTimeout(() => {
