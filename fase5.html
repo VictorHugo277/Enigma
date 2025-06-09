@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Fase 5 - Caça Palavras</title>
   <style>
     body {
@@ -10,6 +10,9 @@
       font-family: Arial, sans-serif;
       text-align: center;
       padding: 20px;
+    }
+    h1 {
+      color: #8B0000;
     }
     table {
       margin: 20px auto;
@@ -23,9 +26,8 @@
       font-weight: bold;
       cursor: pointer;
       user-select: none;
-      color: #8B0000;
+      color: white;
       background-color: #333;
-      transition: background-color 0.3s, color 0.3s;
     }
     td.selected {
       background-color: #8B0000;
@@ -49,94 +51,112 @@
 <body>
 
   <h1>Fase 5 - Caça-Palavras</h1>
-  <p>Encontre todas as palavras: <strong>AMOR</strong>, <strong>DESTINO</strong>, <strong>PÉTALA</strong>, <strong>MARGARIDA</strong></p>
-
+  <p>Encontre todas as palavras:</p>
   <div id="palavras">
     <p id="amor">AMOR</p>
-    <p id="destino">DESTINO</p>
-    <p id="petala">PÉTALA</p>
     <p id="margarida">MARGARIDA</p>
+    <p id="destino">DESTINO</p>
+    <p id="petala">PETALA</p>
+    <p id="lirio">LIRIO</p>
+    <p id="girassol">GIRASSOL</p>
+    <p id="samba">SAMBA</p>
+    <p id="outono">OUTONO</p>
+    <p id="rosas">ROSAS</p>
+    <p id="oceano">OCEANO</p>
   </div>
 
   <table id="grid"></table>
-
   <button onclick="verificarFim()">Verificar</button>
 
   <script>
-    // Palavras sem acento para verificação
-    const palavras = ["AMOR", "DESTINO", "PETALA", "MARGARIDA"];
-    const linhas = 12;
-    const colunas = 12;
-    let selecionadas = [];
-
+    const palavras = ["AMOR", "MARGARIDA", "DESTINO", "PETALA", "LIRIO", "GIRASSOL", "SAMBA", "OUTONO", "ROSAS", "OCEANO"];
+    const linhas = 16;
+    const colunas = 16;
+    const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
     const grid = document.getElementById('grid');
 
-    function gerarGrid() {
-      const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
-      for(let i = 0; i < linhas; i++) {
+    function criarGrid() {
+      for (let i = 0; i < linhas; i++) {
         const tr = document.createElement('tr');
-        for(let j = 0; j < colunas; j++) {
+        for (let j = 0; j < colunas; j++) {
           const td = document.createElement('td');
           td.textContent = letras[Math.floor(Math.random() * letras.length)];
+          td.dataset.row = i;
+          td.dataset.col = j;
           td.addEventListener('click', () => selecionarLetra(td));
           tr.appendChild(td);
         }
         grid.appendChild(tr);
       }
-      inserirPalavras();
     }
 
-    function inserirPalavras() {
-      const positions = [
-        { palavra: "AMOR", row: 0, col: 0, dir: "H" },
-        { palavra: "DESTINO", row: 2, col: 2, dir: "H" },
-        { palavra: "PETALA", row: 4, col: 4, dir: "H" },  // sem acento no grid
-        { palavra: "MARGARIDA", row: 6, col: 0, dir: "H" }
+    function inserirPalavra(palavra) {
+      const direcoes = [
+        { dx: 1, dy: 0 },   // horizontal
+        { dx: 0, dy: 1 },   // vertical
+        { dx: 1, dy: 1 },   // diagonal
+        { dx: -1, dy: 1 },  // diagonal inversa
       ];
 
-      positions.forEach(pos => {
-        for(let k = 0; k < pos.palavra.length; k++) {
-          const cell = grid.rows[pos.row].cells[pos.col + k];
-          cell.textContent = pos.palavra[k];
-          cell.dataset.palavra = pos.palavra;
-          cell.dataset.index = k;
+      let colocada = false;
+      while (!colocada) {
+        const dir = direcoes[Math.floor(Math.random() * direcoes.length)];
+        const row = Math.floor(Math.random() * linhas);
+        const col = Math.floor(Math.random() * colunas);
+
+        let cabe = true;
+        for (let i = 0; i < palavra.length; i++) {
+          const r = row + i * dir.dy;
+          const c = col + i * dir.dx;
+          if (r < 0 || r >= linhas || c < 0 || c >= colunas) {
+            cabe = false;
+            break;
+          }
         }
-      });
+
+        if (cabe) {
+          for (let i = 0; i < palavra.length; i++) {
+            const r = row + i * dir.dy;
+            const c = col + i * dir.dx;
+            const cell = grid.rows[r].cells[c];
+            cell.textContent = palavra[i];
+            cell.dataset.palavra = palavra;
+          }
+          colocada = true;
+        }
+      }
     }
+
+    const selecionados = new Set();
 
     function selecionarLetra(td) {
-      if (td.classList.contains('selected')) {
-        td.classList.remove('selected');
-        selecionadas = selecionadas.filter(cell => cell !== td);
-      } else {
-        td.classList.add('selected');
-        selecionadas.push(td);
-      }
+      td.classList.toggle('selected');
+      verificarPalavras();
     }
 
-    // Função para verificar se as palavras foram encontradas na seleção
-    function verificarFim() {
-      let textoSelecionado = selecionadas.map(td => td.textContent).join('');
-      textoSelecionado = textoSelecionado.toUpperCase();
-
-      let encontradas = 0;
+    function verificarPalavras() {
       palavras.forEach(palavra => {
-        if(textoSelecionado.includes(palavra)) {
+        const cells = document.querySelectorAll(`[data-palavra="${palavra}"]`);
+        const todasSelecionadas = Array.from(cells).every(cell => cell.classList.contains('selected'));
+        if (todasSelecionadas) {
+          cells.forEach(cell => cell.classList.add('selected'));
           document.getElementById(palavra.toLowerCase()).classList.add('found');
-          encontradas++;
         }
       });
+    }
 
-      if(encontradas === palavras.length) {
+    function verificarFim() {
+      const encontradas = document.querySelectorAll('.found').length;
+      if (encontradas === palavras.length) {
         alert("Parabéns! Você encontrou todas as palavras!");
-        window.location.href = 'fase6.html';
+        window.location.href = "fase6.html";
       } else {
-        alert("Ainda faltam palavras! Continue procurando.");
+        alert("Ainda faltam palavras. Continue procurando!");
       }
     }
 
-    gerarGrid();
+    criarGrid();
+    palavras.forEach(inserirPalavra);
   </script>
-
 </body>
 </html>
