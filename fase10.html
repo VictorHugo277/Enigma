@@ -22,11 +22,11 @@
 <button onclick="verificarResposta()">Enviar</button>
 
 <script>
-  const respostaCorreta = "o homem";
+  const respostasValidas = ["ohomem", "oserhumano"];
 
   function verificarResposta() {
-    const resp = document.getElementById('resposta').value.trim().toLowerCase();
-    if (resp.replace(/\s+/g, '') === respostaCorreta.replace(/\s+/g, '')) {
+    const resp = document.getElementById('resposta').value.trim().toLowerCase().replace(/\s+/g, '');
+    if (respostasValidas.includes(resp)) {
       alert("Parabéns! Você decifrou o código.");
       window.location.href = 'fase11.html';
     } else {
