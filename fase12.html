@@ -66,12 +66,11 @@
   </div>
 
   <div class="pergunta">
-    <p>3) Qual minha música favorita de maio:</p>
-    <label><input type="radio" name="q3" value="A"> A) Bom dia, boa tarde, boa noite</label>
-    <label><input type="radio" name="q3" value="B"> B) Lágrimas Negras</label>
-    <label><input type="radio" name="q3" value="C"> C) Eu te Amo</label>
-    <label><input type="radio" name="q3" value="D"> D) Olhos nos Olhos</label>
-    <label><input type="radio" name="q3" value="E"> E) Coleção</label>
+    <p>3) Minhas músicas favoritas de junho:</p>
+    <label><input type="radio" name="q3" value="A"> A) Nuvem negra, Apesar de você e Coleção</label>
+    <label><input type="radio" name="q3" value="B"> B) Nuvem negra, Apesar de você e Vilão da mídia</label>
+    <label><input type="radio" name="q3" value="C"> C) Curumim, Cálice e Cotidiano</label>
+    <label><input type="radio" name="q3" value="D"> D) Lágrimas Negras, Eternamente e Magnólia</label>
   </div>
 
   <div class="pergunta">
@@ -111,7 +110,7 @@
         return;
       }
 
-      if (q1.value === 'C' && q2.value === 'B' && q3.value === 'D' && q4.value === 'B' && q5.value === 'B') {
+      if (q1.value === 'C' && q2.value === 'B' && q3.value === 'A' && q4.value === 'B' && q5.value === 'B') {
         feedback.textContent = 'Parabéns! Você completou o quiz e venceu o jogo!';
         feedback.className = 'feedback correct';
         setTimeout(() => {
